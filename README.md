@@ -25,3 +25,6 @@ We reccomend you run SynthDet on a CUDA-enabled GPU that has inference times of 
 ### Starting TorchServe
 If the previous steps are completed, run `./launch.sh` from this directory and TorchServe will start. We reccomend starting TorchServe in `tmux` since it fills its terminal with text output in the background.
 
+## Advanced Options
+### Enabling HTTPS
+By default, TorchServe accepts unencrypted HTTP requests, which is not optimal for privacy reasons, when sending real-life images over unencrypted HTTP. Because of this, we recommend configuring TorchServe to use HTTPS. You can provide your own SSL certificate, or create a self-signed one using [TorchServe's guide](https://pytorch.org/serve/configuration.html#id3).
