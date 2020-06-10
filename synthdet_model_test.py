@@ -1,6 +1,7 @@
 import json
 import io
 import numpy as np
+import sys
 import time
 import torch
 import torchvision
@@ -14,7 +15,6 @@ from torchvision.models.detection.backbone_utils import resnet_fpn_backbone
 model = FasterRCNN(resnet_fpn_backbone("resnet50", False), num_classes=64)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-# model_path = "/Users/michael.pavkovic/sw/synthdet_torchserve/synthdet_faster_rcnn.pth"
 model_path = "synthdet_faster_rcnn.pth"
 model_save = torch.load(model_path, map_location=device) # no CUDA on macOS   
 model.load_state_dict(model_save["model"])
@@ -22,8 +22,7 @@ model.to(device)
 model.eval()
 
 # preprocess on test image
-# image_path = "/Users/michael.pavkovic/Downloads/pringles.jpg"
-image_path = "various.jpg"
+image_path = sys.argv[1]
 image = Image.open(image_path)
 image_to_tensor = transforms.Compose([
     transforms.ToTensor()

@@ -16,8 +16,11 @@ We reccomend you run SynthDet on a CUDA-enabled GPU that has inference times of 
 3. If your machine has `apt-get`, you can run `./configure.sh` (you may have to `chmod +x configure.sh` first). `configure.sh` will install necessary dependencies, including TorchServe, and it will build a TorchServe model archive.
 
 ### Other scripts
-`archive.sh` will create a TorchServe model archive and place it in the current directory.
-`build.sh` will run `archive.sh` and place the resulting model archive in the `model_store` folder, where TorchServe reads models from.
+* `archive.sh` will create a TorchServe model archive and place it in the current directory
+* `build.sh` will run `archive.sh` and place the resulting model archive in the `model_store` folder, where TorchServe reads models from
+* `cuda_check.py` will check if PyTorch has CUDA access
+* `synthdet_model_test.py` will test the SynthDet model on an image specified.
+
 
 ### Starting TorchServe
 If the previous steps are completed, run `./launch.sh` from this directory and TorchServe will start. We reccomend starting TorchServe in `tmux` since it fills its terminal with text output in the background.
