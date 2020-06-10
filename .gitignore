@@ -1,0 +1,5 @@
+__pycache__
+logs
+model_store
+synthdet.mar
+synthdet_faster_rcnn.pth
