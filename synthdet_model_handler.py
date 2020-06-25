@@ -104,18 +104,22 @@ class SynthDetModelHandler(object):
         pred_scores = list(pred[0]["scores"].cpu().detach().numpy())
 
         # Index of last score that is greater than threshold
-        pred_threshold_index = [pred_scores.index(x) for x in pred_scores if x > threshold][-1]
-
-        pred_boxes = pred_boxes[:pred_threshold_index + 1]
-        pred_classes = pred_classes[:pred_threshold_index + 1]
-        pred_scores = pred_scores[:pred_threshold_index + 1]
+        valid_indexes = [pred_scores.index(x) for x in pred_scores if x > threshold]
 
         # Stop timing
         time_inference_stop = time.time()
-
         self.logger.info(f"Took {round((time_inference_stop - time_inference_start) * 1000)}ms on inference")
 
-        return [pred_classes, pred_boxes, pred_scores]
+        if len(valid_indexes) > 0:
+            pred_threshold_index = valid_indexes[-1]
+
+            pred_boxes = pred_boxes[:pred_threshold_index + 1]
+            pred_classes = pred_classes[:pred_threshold_index + 1]
+            pred_scores = pred_scores[:pred_threshold_index + 1]
+
+            return [pred_classes, pred_boxes, pred_scores]
+        else:
+            return [[], [], []]
 
     def postprocess(self, inference_output):
         """
@@ -132,6 +136,7 @@ class SynthDetModelHandler(object):
 
             return [[{
                 "label": str(labels[class_index] if labels else class_index), # Cast to str in case output is an int64 to prevent JSON key TypeError
+                "label_id": int(class_index), 
                 "box": bounding_box,
                 "score": float(score)
             } for class_index, bounding_box, score in zip(*inference_output)]]
