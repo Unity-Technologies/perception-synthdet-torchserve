@@ -15,6 +15,7 @@ We recommend you run SynthDet on a CUDA-enabled GPU that has inference times of 
 | Nvidia GeForce RTX 2080 Max-Q Design | 110 ms | Native\*\* | N/A |
 
 \* Inference tests done with PyTorch on images with sizes near 1280x720 and 640x480. Size difference between 720p and standard definition had negligable impact on inference time.
+<br/>
 \*\* Test done on an Alienware M15 laptop.
 
 Feel free to submit a PR with more test times :]
@@ -23,19 +24,24 @@ Feel free to submit a PR with more test times :]
 As with any network request, there is time overhead in sending data to and from the server. Your results may significantly vary from ours in this area, depending on proximity to the server, WiFi speeds, ISP speeds, and many more factors. Try to aim for a total request time of ~1000 ms or less (that includes model inference time).
 
 ### Configuring your machine
-1. Copy this entire directory onto the machine that will host TorchServe.
-2. Copy your SynthDet serialized PyTorch model file into the same place, and name it `synthdet_faster_rcnn.pth`.
-3. If your machine has `apt-get`, you can run `./configure.sh` (you may have to `chmod +x configure.sh` first). `configure.sh` will install necessary dependencies, including TorchServe, and it will build a TorchServe model archive.
+1. Copy your SynthDet serialized PyTorch model file into your cloned repository, and name it `synthdet_faster_rcnn.pth`.
+2. Copy this entire directory onto the machine that will host TorchServe.
+3. Make scripts executable: `chmod +x archive.sh build.sh configure.sh launch.sh`
+4. If your machine has `apt-get`, you can run `./configure.sh` which will prepare everything to launch TorchServe.
 
-### Other scripts
-* `archive.sh` will create a TorchServe model archive and place it in the current directory
-* `build.sh` will run `archive.sh` and place the resulting model archive in the `model_store` folder, where TorchServe reads models from
-* `cuda_check.py` will check if PyTorch has CUDA access
-* `synthdet_model_test.py` will test the SynthDet model on an image specified.
-
+### Scripts
+* `archive.sh`: create a TorchServe model archive and place it in the current directory
+* `build.sh`: run `archive.sh` and place the resulting model archive in the `model_store` folder, where TorchServe reads models from
+* `configure.sh`: install necessary dependencies, including TorchServe, and it will build a TorchServe model archive
+* `cuda_check.py`: check if PyTorch has CUDA access
+* `launch.sh`: starts TorchServe; run in `tmux` to prevent your terminal from getting flooded with text output
+* `synthdet_model_test.py`: test the SynthDet model on an image specified as a parameter
 
 ### Starting TorchServe
-If the previous steps are completed, run `./launch.sh` from this directory and TorchServe will start. We recommend starting TorchServe in `tmux` since it fills its terminal with text output in the background.
+If you ran `configure.sh`, or completed the steps that it does, run `./launch.sh` from this directory and TorchServe will start. We recommend starting TorchServe in `tmux` since it fills its terminal with text output in the background.
+
+### Stopping TorchServe
+Run `torchserve --stop` to stop TorchServe. This can be run from any terminal on the machine.
 
 ### Accessing TorchServe
 Submit a POST request to `/predictions/synthdet` with JPEG data of the requested image in the request body. If using `curl`, use the `-T` flag with the image as its value.
