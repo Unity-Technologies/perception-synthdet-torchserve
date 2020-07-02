@@ -1,3 +1,5 @@
 #!/bin/bash
 
-torchserve --start --ncs --model-store model_store --models synthdet.mar
+source config.properties
+
+torchserve --start --ncs --model-store $model_store

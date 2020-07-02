@@ -8,7 +8,7 @@ sudo apt-get install openjdk-11-jdk
 sudo apt-get install python3-pip
 
 pip3 install torch torchtext torchvision sentencepiece psutil future yacs
-pip3 install torchserve torch-model-archiver
+pip3 install torchserve torch-model-archiver segno
 
 echo "Checking for CUDA..."
 python3 ./cuda_check.py

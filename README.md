@@ -35,6 +35,7 @@ As with any network request, there is time overhead in sending data to and from 
 * `configure.sh`: install necessary dependencies, including TorchServe, and it will build a TorchServe model archive
 * `cuda_check.py`: check if PyTorch has CUDA access
 * `launch.sh`: starts TorchServe; run in `tmux` to prevent your terminal from getting flooded with text output
+* `qr.sh`: prints QR codes for all model endpoints into your terminal; great for use with the Viewer app
 * `synthdet_model_test.py`: test the SynthDet model on an image specified as a parameter
 
 ### Starting TorchServe
