@@ -26,7 +26,7 @@ As with any network request, there is time overhead in sending data to and from 
 ### Configuring your machine
 1. Copy your SynthDet serialized PyTorch model file into your cloned repository, and name it `synthdet_faster_rcnn.pth`.
 2. Copy this entire directory onto the machine that will host TorchServe.
-3. Make scripts executable: `chmod +x archive.sh build.sh configure.sh launch.sh`
+3. Make scripts executable: `chmod +x archive.sh build.sh configure.sh launch.sh qr.sh`
 4. If your machine has `apt-get`, you can run `./configure.sh` which will prepare everything to launch TorchServe.
 
 ### Scripts
@@ -40,6 +40,8 @@ As with any network request, there is time overhead in sending data to and from 
 | `launch.sh` | Starts TorchServe; run in `tmux` to prevent your terminal from getting flooded with text output |
 | `qr.sh` | Prints QR codes for all model endpoints into your terminal; great for use with the Viewer app |
 | `synthdet_model_test.py` | Tests the SynthDet model on an image specified as a parameter |
+
+Note: `qr.sh` assumes you are hosting through your public IP address. If you want to stick with your internal IP address (if self-hosting), or manually want to generate QR codes, you can use the python tool `segno <url>` installed earlier.
 
 ### Starting TorchServe
 If you ran `configure.sh`, or completed the steps that it does, run `./launch.sh` from this directory and TorchServe will start. We recommend starting TorchServe in `tmux` since it fills its terminal with text output in the background.
