@@ -30,13 +30,16 @@ As with any network request, there is time overhead in sending data to and from 
 4. If your machine has `apt-get`, you can run `./configure.sh` which will prepare everything to launch TorchServe.
 
 ### Scripts
-* `archive.sh`: create a TorchServe model archive and place it in the current directory
-* `build.sh`: run `archive.sh` and place the resulting model archive in the `model_store` folder, where TorchServe reads models from
-* `configure.sh`: install necessary dependencies, including TorchServe, and it will build a TorchServe model archive
-* `cuda_check.py`: check if PyTorch has CUDA access
-* `launch.sh`: starts TorchServe; run in `tmux` to prevent your terminal from getting flooded with text output
-* `qr.sh`: prints QR codes for all model endpoints into your terminal; great for use with the Viewer app
-* `synthdet_model_test.py`: test the SynthDet model on an image specified as a parameter
+
+| Script | Description |
+| ------ | ----------- |
+| `archive.sh` | Creates a TorchServe model archive and place it in the current directory |
+| `build.sh` | Runs `archive.sh` and places the resulting model archive in the `model_store` folder, where TorchServe reads models from |
+| `configure.sh` | Installs necessary dependencies, including TorchServe, then builds a TorchServe model archive |
+| `cuda_check.py` | Checks if PyTorch has CUDA access |
+| `launch.sh` | Starts TorchServe; run in `tmux` to prevent your terminal from getting flooded with text output |
+| `qr.sh` | Prints QR codes for all model endpoints into your terminal; great for use with the Viewer app |
+| `synthdet_model_test.py` | Tests the SynthDet model on an image specified as a parameter |
 
 ### Starting TorchServe
 If you ran `configure.sh`, or completed the steps that it does, run `./launch.sh` from this directory and TorchServe will start. We recommend starting TorchServe in `tmux` since it fills its terminal with text output in the background.
