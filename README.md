@@ -24,7 +24,7 @@ Feel free to submit a PR with more test times :]
 As with any network request, there is time overhead in sending data to and from the server. Your results may significantly vary from ours in this area, depending on proximity to the server, WiFi speeds, ISP speeds, and many more factors. Try to aim for a total request time of ~1000 ms or less (that includes model inference time).
 
 ### Configuring your machine
-1. Copy your SynthDet serialized PyTorch model file into your cloned repository, and name it `synthdet_faster_rcnn.pth`.
+1. Copy your SynthDet serialized PyTorch model file into your cloned repository, and name it `synthdet_faster_rcnn.pth`. If you are using a custom model, read the [Adapting for your Model](https://github.com/Unity-Technologies/perception-synthdet-torchserve/wiki/Adapting-for-your-Model) wiki page.
 2. Copy this entire directory onto the machine that will host TorchServe.
 3. Make scripts executable: `chmod +x archive.sh build.sh configure.sh launch.sh qr.sh`
 4. If your machine has `apt-get`, you can run `./configure.sh` which will prepare everything to launch TorchServe.
