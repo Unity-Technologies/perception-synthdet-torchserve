@@ -9,4 +9,4 @@ As part of the Unity SynthDet Viewer App project, we found it best to host a tra
 * [Advanced Options](https://github.com/Unity-Technologies/perception-synthdet-torchserve/blob/master/docs/enabling-https.md)
 
 ## License
-* [License](LICENSE.md)
+* [License](https://github.com/Unity-Technologies/perception-synthdet-torchserve/blob/master/LICENSE.md)
