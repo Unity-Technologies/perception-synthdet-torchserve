@@ -6,6 +6,21 @@ As part of the Unity SynthDet Viewer App project, we found it best to host a tra
 ## Getting Started
 It is highly encouraged that you run TorchServe on a computer with CUDA capability, since prediction times will be unusable when predicting on a CPU (around 3 seconds of inference time). Make sure the latest CUDA drivers are installed. Cloud services such as [AWS](https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-Deep-Learning-AMI-Ubuntu-1604/B077GCH38C) and [Google Cloud](https://console.cloud.google.com/marketplace/details/click-to-deploy-images/deeplearning) provide VM images pre-configured to support CUDA. If running in the cloud, it is easiest to start with one of those. For RAM, 16 GB will work fine. Check out our deploy guides for [AWS](https://github.com/Unity-Technologies/perception-synthdet-torchserve/wiki/Deploying-a-CUDA-enabled-AWS-VM-Instance) and [Google Cloud Platform](https://github.com/Unity-Technologies/perception-synthdet-torchserve/wiki/Deploying-a-CUDA-enabled-GCP-VM-Instance) VM instances.
 
+### Configuring your machine
+1. Copy your SynthDet serialized PyTorch model file into your cloned repository, and name it `synthdet_faster_rcnn.pth`. If you are using a custom model, read the [Adapting for your Model](https://github.com/Unity-Technologies/perception-synthdet-torchserve/wiki/Adapting-for-your-Model) wiki page.
+2. Copy this entire directory onto the machine that will host TorchServe.
+3. Make scripts executable: `chmod +x archive.sh build.sh configure.sh launch.sh qr.sh`
+4. If your machine has `apt-get`, you can run `./configure.sh` which will prepare everything to launch TorchServe.
+
+### Starting TorchServe
+If you ran `configure.sh`, or completed the steps that it does, run `./launch.sh` from this directory and TorchServe will start. We recommend starting TorchServe in `tmux` since it fills its terminal with text output in the background.
+
+### Stopping TorchServe
+Run `torchserve --stop` to stop TorchServe. This can be run from any terminal on the machine.
+
+### Accessing TorchServe
+Submit a POST request to `/predictions/synthdet` with JPEG data of the requested image in the request body. If using `curl`, use the `-T` flag with the image as its value.
+
 ### GPU Performance
 We recommend you run SynthDet on a CUDA-enabled GPU that has inference times of 150 ms or less. If using Google Cloud, the Nvidia Tesla T4 will work fine. These are the GPUs that have been tested so far:
 | GPU | Average Inference Time\* | Cloud Platform | Hourly VM Cost |
@@ -23,12 +38,6 @@ Feel free to submit a PR with more test times :]
 ### Internet Latency
 As with any network request, there is time overhead in sending data to and from the server. Your results may significantly vary from ours in this area, depending on proximity to the server, WiFi speeds, ISP speeds, and many more factors. Try to aim for a total request time of ~1000 ms or less (that includes model inference time).
 
-### Configuring your machine
-1. Copy your SynthDet serialized PyTorch model file into your cloned repository, and name it `synthdet_faster_rcnn.pth`. If you are using a custom model, read the [Adapting for your Model](https://github.com/Unity-Technologies/perception-synthdet-torchserve/wiki/Adapting-for-your-Model) wiki page.
-2. Copy this entire directory onto the machine that will host TorchServe.
-3. Make scripts executable: `chmod +x archive.sh build.sh configure.sh launch.sh qr.sh`
-4. If your machine has `apt-get`, you can run `./configure.sh` which will prepare everything to launch TorchServe.
-
 ### Scripts
 
 | Script | Description |
@@ -42,15 +51,6 @@ As with any network request, there is time overhead in sending data to and from 
 | `synthdet_model_test.py` | Tests the SynthDet model on an image specified as a parameter |
 
 Note: `qr.sh` assumes you are hosting through your public IP address. If you want to stick with your internal IP address (if self-hosting), or manually want to generate QR codes, you can use the python tool `segno <url>` installed earlier.
-
-### Starting TorchServe
-If you ran `configure.sh`, or completed the steps that it does, run `./launch.sh` from this directory and TorchServe will start. We recommend starting TorchServe in `tmux` since it fills its terminal with text output in the background.
-
-### Stopping TorchServe
-Run `torchserve --stop` to stop TorchServe. This can be run from any terminal on the machine.
-
-### Accessing TorchServe
-Submit a POST request to `/predictions/synthdet` with JPEG data of the requested image in the request body. If using `curl`, use the `-T` flag with the image as its value.
 
 ## Advanced Options
 ### Enabling HTTPS
